@@ -84,6 +84,17 @@ local function try_move(dx, dy)
   end
 end
 
+function command(input)
+--  crawl.process_keys(input .. "\n")
+--processing = true
+--crawl.delay(100)
+--crawl.flush_input()
+crawl.sendkeys(input)
+--coroutine.yield(true)
+--processing = false
+-- crawl.flush_input()
+end
+
 local function move_towards(dx, dy)
   local move = nil
   if abs(dx) > abs(dy) then
@@ -120,7 +131,8 @@ local function move_towards(dx, dy)
   if move == nil then
     crawl.mpr("Failed to move towards target.")
   else
-    crawl.process_keys(move)
+    --crawl.process_keys(move)
+    crawl.sendkeys(move)
   end
 end
 
@@ -217,22 +229,26 @@ end
 
 local function attack_fire(x,y)
   move = 'fr' .. vector_move(x, y) .. 'f'
-  crawl.process_keys(move)
+  --crawl.process_keys(move)
+    crawl.sendkeys(move)
 end
 
 local function attack_fire_stop(x,y)
   move = 'fr' .. vector_move(x, y) .. '.'
-  crawl.process_keys(move)
+  --crawl.process_keys(move)
+    crawl.sendkeys(move)
 end
 
 local function attack_reach(x,y)
   move = 'vr' .. vector_move(x, y) .. '.'
-  crawl.process_keys(move)
+  --crawl.process_keys(move)
+    crawl.sendkeys(move)
 end
 
 local function attack_melee(x,y)
   move = delta_to_vi(x, y)
-  crawl.process_keys(move)
+  --crawl.process_keys(move)
+    crawl.sendkeys(move)
 end
 
 local function set_stop_level(key, value, mode)
@@ -273,7 +289,8 @@ function attack(allow_movement)
     crawl.mpr("You are too confused!")
   elseif caught then
     if AUTOFIGHT_CAUGHT then
-      crawl.process_keys(delta_to_vi(1, 0)) -- Direction doesn't matter.
+    --  crawl.process_keys(delta_to_vi(1, 0)) -- Direction doesn't matter.
+    crawl.sendkeys(delta_to_vi(1,0))
     else
       crawl.mpr("You are " .. caught .. "!")
     end
