@@ -21,8 +21,10 @@ void cluaopen_moninf(lua_State *ls);
 void cluaopen_options(lua_State *ls);
 void cluaopen_travel(lua_State *ls);
 void cluaopen_view(lua_State *ls);
+void cluaopen_map(lua_State *ls);
 void cluaopen_you(lua_State *ls);
 void cluaopen_spells(lua_State *ls);
+void cluaopen_feat(lua_State *ls);
 
 void cluaopen_globals(lua_State *ls);
 

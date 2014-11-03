@@ -108,6 +108,7 @@ l_global.o \
 l_item.o \
 l_los.o \
 l_mapgrd.o \
+l_map.o \
 l_mapmrk.o \
 l_moninf.o \
 l_mons.o \

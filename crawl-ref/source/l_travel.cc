@@ -65,6 +65,19 @@ LUAFN(l_find_deepest_explored)
     PLUARET(number, find_deepest_explored(lid).depth);
 }
 
+LUAFN(l_travel_towards)
+{
+    coord_def s;
+    s.x = luaL_checkint(ls, 1);
+    s.y = luaL_checkint(ls, 2);
+    if (!in_bounds(s)) {
+        luaL_error(ls, "Out of bounds");
+        return 0;
+    }
+    start_travel(s);
+    return 0;
+}
+
 static const struct luaL_reg travel_lib[] =
 {
     { "set_exclude", l_set_exclude },
@@ -72,6 +85,7 @@ static const struct luaL_reg travel_lib[] =
     { "feature_traversable", l_feature_is_traversable },
     { "feature_solid", l_feature_is_solid },
     { "find_deepest_explored", l_find_deepest_explored },
+    { "travel_towards", l_travel_towards },
 
     { NULL, NULL }
 };

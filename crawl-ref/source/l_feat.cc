@@ -55,8 +55,7 @@ FEATF(_feat_is_branch_entrance, feat_is_branch_entrance)
 FEATF(_feat_is_critical, feat_is_critical)
 
 const struct luaL_reg feat_dlib[] =
-{
-{ "is_wall", _feat_is_wall },
+{ { "is_wall", _feat_is_wall },
 { "is_solid", _feat_is_solid },
 { "has_solid_floor", _feat_has_solid_floor },
 { "is_opaque", _feat_is_opaque },
@@ -82,3 +81,9 @@ const struct luaL_reg feat_dlib[] =
 
 { NULL, NULL }
 };
+
+// TODO change to clua fns that only check local coords
+void cluaopen_feat(lua_State *ls)
+{
+    luaL_openlib(ls, "feat", feat_dlib, 0);
+}
