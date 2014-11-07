@@ -4,6 +4,7 @@
 
 #include "tileweb.h"
 
+#include <unistd.h>
 #include <errno.h>
 #include <stdarg.h>
 #include <sys/socket.h>
