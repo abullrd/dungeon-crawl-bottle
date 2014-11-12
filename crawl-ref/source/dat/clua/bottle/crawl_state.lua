@@ -10,7 +10,9 @@ CrawlState = {
       end
     end)
     return et
-  end
+  end,
+
+  desired_items = {}
 }
 
 return CrawlState

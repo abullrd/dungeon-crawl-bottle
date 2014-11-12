@@ -1,11 +1,16 @@
-crawl_helpers= assert(loadfile('rcs/crawl_helpers.lua'))()
-crawl_state = assert(loadfile('rcs/crawl_state.lua'))()
-
+crawl_helpers = assert(loadfile('dat/clua/bottle/crawl_helpers.lua'))()
+crawl_state = assert(loadfile('dat/clua/bottle/crawl_state.lua'))()
 
 WrapperState = {
   load_script = function()
-    local f = assert(loadfile("rcs/userscript.lua"))
-    WrapperState.usr_script = f()
+    local scriptfile = "rcs/".. you.name() .. ".scripts/luascript/main.lua"
+    local env = setmetatable({
+	c_state = crawl_state,
+	c_helpers = crawl_helpers
+    }, {__index={}})
+    assert(pcall(setfenv(assert(loadfile(scriptfile)), env)))
+    setmetatable(env, nil)
+    WrapperState.usr_script = env
   end,
 
   execute_script = function()
@@ -13,7 +18,8 @@ WrapperState = {
     crawl.mpr("Script executing")
     crawl.delay(100)
     crawl.more_autoclear(true)
-    WrapperState.usr_script.start_turn()
+    
+    WrapperState.usr_script.start_turn(crawl_state)
     WrapperState.process_keys()
   end,
 
@@ -50,9 +56,10 @@ function toggle_script()
     repeatScript = not repeatScript
     if (repeatScript) then
       run_script()
-      return
+    else
+       crawl.mpr("Script stop")
+       crawl.sendkeys('.')
     end
-    crawl.mpr("Script stop")
   end
 
 CrawlBot = {

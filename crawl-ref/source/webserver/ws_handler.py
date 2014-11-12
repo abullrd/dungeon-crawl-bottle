@@ -3,6 +3,8 @@ import tornado.websocket
 import tornado.ioloop
 import tornado.template
 
+import git
+
 import os
 import subprocess
 import logging
@@ -150,6 +152,7 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
             "go_lobby": self.go_lobby,
             "get_rc": self.get_rc,
             "set_rc": self.set_rc,
+            "load_script": self.load_script,
             }
 
     client_closed = property(lambda self: (not self.ws_connection) or self.ws_connection.client_terminated)
@@ -540,6 +543,16 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
         rcfile_path = os.path.join(rcfile_path, self.username + ".rc")
         with open(rcfile_path, 'w') as f:
             f.write(contents.encode("utf8"))
+
+    def load_script(self, username, script_url):
+        try:
+            path = "{}/rcs/{}.scripts".format(os.getcwd(), username)
+            if os.path.exists(path + "/luascript"):
+                git.cmd.Git(path + "/luascript").pull()
+            else:
+                git.Repo.clone_from(script_url, path + "/luascript")
+        except Exception, e:
+            self.logger.warning("Error while handling script load: %s %s", username, script_url)
 
     def on_message(self, message):
         if message.startswith("{"):
