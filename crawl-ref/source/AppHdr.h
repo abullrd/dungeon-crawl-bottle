@@ -72,7 +72,7 @@ static inline double pow(int x, double y) { return std::pow((double)x, y); }
 // badly-written or malicious user scripts from consuming too much
 // memory.
 //
-#define CLUA_MAX_MEMORY_USE (2 * 1024)
+#define CLUA_MAX_MEMORY_USE (10 * 1024)
 
 // Uncomment to prevent Crawl from looking for a list of saves when
 // asking the player to enter a name. This can speed up startup

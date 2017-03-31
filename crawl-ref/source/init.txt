@@ -81,5 +81,4 @@
 # include                 = 0.13_monster_glyphs.txt
 # include                 = 0.14_monster_glyphs.txt
 
-lua_file = dat/clua/bot.lua
-lua_file = dat/clua/autobot.lua
+lua_file = dat/clua/bottle/turn_wrapper.lua

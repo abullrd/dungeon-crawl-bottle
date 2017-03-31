@@ -135,6 +135,10 @@ public:
     void add_shutdown_listener(lua_shutdown_listener *);
     void remove_shutdown_listener(lua_shutdown_listener *);
 
+    // Triggers
+    void level_changed_trigger(const bool new_level);
+    void terrain_seen_trigger(const coord_def pos);
+
     static int file_write(lua_State *ls);
     static int loadfile(lua_State *ls, const char *file,
                         bool trusted = false, bool die_on_fail = false);

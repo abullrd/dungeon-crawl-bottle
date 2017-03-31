@@ -14,6 +14,7 @@
 #include "stringutil.h"
 #include "syscalls.h"
 #include "unicode.h"
+#include "l_map.h"
 
 #define BUGGY_PCALL_ERROR  "667: Malformed response to guarded pcall."
 #define BUGGY_SCRIPT_ERROR "666: Killing badly-behaved Lua script."
@@ -729,6 +730,16 @@ void CLua::init_lua()
 
     lua_pushlightuserdata(_state, this);
     setregistry("__clua");
+}
+
+void CLua::terrain_seen_trigger(const coord_def pos)
+{
+  clua_map_knowledge_update_seen(_state, pos);
+}
+
+void CLua::level_changed_trigger(const bool new_level)
+{
+  clua_map_knowledge_load_level(_state);
 }
 
 CLua &CLua::get_vm(lua_State *ls)

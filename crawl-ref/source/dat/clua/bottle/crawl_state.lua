@@ -1,12 +1,14 @@
---CrawlHelpers = require('rcs/crawl_helpers.lua')
-
 CrawlState = {
-  enemies = function()
+  nearby_monsters = function(args)
     local et = {}
     crawl_helpers.sight_range_iterator(function(x,y)
       m = monster.get_monster_at(x,y)
       if (m) then
-        table.insert(et, {enemy = m, x = x, y = y})
+        if (args.hostileOnly) then
+          crawl.mpr("mon " ..m:name() .. " | "  .. m:attitude())
+          crawl.mpr("mon " .. tostring(m:attitude() == enum.mon_attitude_type.ATT_HOSTILE))
+        end
+        table.insert(et, {monster = m, x = x, y = y})
       end
     end)
     return et

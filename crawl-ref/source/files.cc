@@ -1544,6 +1544,10 @@ bool load_level(dungeon_feature_type stair_taken, load_mode_type load_mode,
     if (you.position != env.old_player_pos)
        shake_off_monsters(you.as_player());
 
+#ifdef CLUA_BINDINGS
+    clua.level_changed_trigger(just_created_level);
+#endif
+
     return just_created_level;
 }
 

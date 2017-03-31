@@ -8,6 +8,9 @@
 #include "notes.h"
 #include "religion.h"
 #include "terrain.h"
+#ifdef CLUA_BINDINGS
+ #include "clua.h"
+#endif
 #ifdef USE_TILE
  #include "tilepick.h"
  #include "tileview.h"
@@ -117,6 +120,10 @@ void set_terrain_seen(const coord_def pos)
     cell->flags &= (~MAP_CHANGED_FLAG);
     cell->flags |= MAP_SEEN_FLAG;
 
+#ifdef CLUA_BINDINGS
+      clua.terrain_seen_trigger(pos);
+#endif
+    
 #ifdef USE_TILE
     tiles.update_minimap(pos);
 #endif
